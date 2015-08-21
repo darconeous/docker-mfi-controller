@@ -1,4 +1,4 @@
-FROM debian/wheezy
+FROM debian:wheezy
 
 RUN apt-get -y update \
 	&& DEBIAN_FRONTEND=noninteractive \

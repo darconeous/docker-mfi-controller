@@ -3,23 +3,22 @@ Description=Ubituiti mFi Controller
 After=docker.service
 
 [Service]
-TimeoutStartSec=0
-RemainAfterExit=true
+Restart=always
+RestartSec=1
 ExecStartPre=-/usr/bin/docker kill mfi-controller
 ExecStartPre=-/usr/bin/docker rm -f mfi-controller
-ExecStartPre=/usr/bin/docker pull darco/mfi-controller
+#ExecStartPre=/usr/bin/docker pull darco/mfi-controller
 ExecStartPre=-/usr/bin/docker create --name="mfi-controller-backing" darco/mfi-controller
 ExecStart=/usr/bin/docker run \
-	-d \
 	--name mfi-controller \
-	-p 6443:443/tcp \
-	-p 6080:80/tcp \
-	-p 6081:6081/tcp \
-	-p 6880:6880/tcp \
+	-p 6443:6443 \
+	-p 6080:6080 \
+	-p 6081:6081 \
+	-p 6880:6880 \
 	--volumes-from=mfi-controller-backing \
+	--net=host \
 	darco/mfi-controller
 ExecStop=/usr/bin/docker stop -t 2 mfi-controller
-Restart=always
 
 [Install]
 WantedBy=multi-user.target

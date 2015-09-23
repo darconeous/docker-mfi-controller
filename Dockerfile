@@ -10,6 +10,8 @@ ADD https://www.ubnt.com/downloads/mfi/$MFI_VERSION/mFi.unix.zip /
 
 RUN unzip mFi.unix.zip && rm mFi.unix.zip
 
+RUN mkdir -p /mFi/logs && ln -s /dev/stderr /mFi/logs/mongod.log && ln -s /dev/stderr /mFi/logs/server.log
+
 EXPOSE 6843 6080 6081 6880 6443
 
 VOLUME ["/mFi/data"]

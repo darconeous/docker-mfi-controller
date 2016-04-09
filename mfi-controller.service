@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run \
 	-p 6080:6080 \
 	-p 6081:6081 \
 	-p 6880:6880 \
+	-p 2323:2323 \
 	-m 1g \
 	--cpu-period=100000 \
 	--cpu-quota=200000 \

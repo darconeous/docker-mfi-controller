@@ -7,20 +7,22 @@ Restart=always
 RestartSec=1
 ExecStartPre=-/usr/bin/docker kill mfi-controller
 ExecStartPre=-/usr/bin/docker rm -f mfi-controller
-ExecStartPre=/usr/bin/docker pull darco/mfi-controller
+ExecStartPre=-/usr/bin/docker pull darco/mfi-controller
 ExecStartPre=-/usr/bin/docker create --name="mfi-controller-backing" darco/mfi-controller
 ExecStart=/usr/bin/docker run \
 	--name mfi-controller \
 	-p 6443:6443 \
 	-p 6080:6080 \
-	-p 6081:6081 \
 	-p 6880:6880 \
+	-p 6843:6843 \
 	-p 2323:2323 \
-	-m 1g \
+	-p 10001:10001/udp \
+	-p 3478:3478/udp \
+	-p 1900:1900/udp \
+	-m 3g \
 	--cpu-period=100000 \
 	--cpu-quota=200000 \
 	--volumes-from=mfi-controller-backing \
-	--net=host \
 	darco/mfi-controller
 ExecStop=/usr/bin/docker stop -t 2 mfi-controller
 

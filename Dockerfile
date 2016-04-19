@@ -12,7 +12,8 @@ RUN unzip mFi.unix.zip && rm mFi.unix.zip
 
 RUN mkdir -p /mFi/logs && ln -s /dev/stderr /mFi/logs/mongod.log && ln -s /dev/stderr /mFi/logs/server.log
 
-EXPOSE 6843 6080 6081 6880 6443 2323
+EXPOSE 6843/tcp 6080/tcp 6880/tcp 6443/tcp 2323/tcp
+EXPOSE 10001/udp 3478/udp 1900/udp
 
 VOLUME ["/mFi/data"]
 
